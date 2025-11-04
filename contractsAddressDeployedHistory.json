@@ -115,5 +115,14 @@
     "deploymentDate": "2025-03-22T04:28:20.214Z",
     "blockHah": "",
     "blockNumber": 0
+  },
+  {
+    "name": "MiniCoin",
+    "address": "0xB02020803E0C9E2B4fd6f12695e40cf858319884",
+    "network": "cc3_testnet",
+    "deployer": "0x2a7124FA2e830E85741761d9A9F4DE6455b049c7",
+    "deploymentDate": "2025-11-04T08:05:19.212Z",
+    "blockHah": "",
+    "blockNumber": 0
   }
 ]
