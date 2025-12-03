@@ -64,20 +64,13 @@ const setupContractTesting = async (owner) => {
     const FactoryMiniCoin = await ethers.getContractFactory('MiniCoin');
     let MiniCoin;
     if (network.name === 'hardhat') {
-        MiniCoin = await FactoryMiniCoin.deploy(owner.address, NAME, SYMBOL, TOTALSUPPLY);
-
+        MiniCoin = await FactoryMiniCoin.deploy(NAME, SYMBOL);
         await MiniCoin.deployed();
+        await MiniCoin.mint(owner.address, TOTALSUPPLY);
     } else {
         const MiniCoinAddress = await addressBook.retrieveContract('MiniCoin', network.name);
 
-        MiniCoin = await new ethers.Contract(MiniCoinAddress, FactoryMiniCoin.interface, owner.address);
-        if (!skipInitializeContracts) {
-            try {
-                await MiniCoin.name();
-            } catch (e) {
-                await MiniCoin.initialize(owner.address, NAME, SYMBOL, TOTALSUPPLY);
-            }
-        }
+        MiniCoin = await new ethers.Contract(MiniCoinAddress, FactoryMiniCoin.interface, owner.address);        
     }
     return [MiniCoin];
 };

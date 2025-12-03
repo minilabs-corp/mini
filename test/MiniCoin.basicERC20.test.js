@@ -44,6 +44,24 @@ describe('MiniCoin - Basic ERC20 functions', function () {
             expect(await MiniCoin.balanceOf(owner.address)).to.equal(TestHelper.TOTALSUPPLY);
             expect(await MiniCoin.totalSupply()).to.equal(TestHelper.TOTALSUPPLY);
         });
+
+        it('Should revert if owner tries to mint more than once', async () => {
+            const amount = 1;
+            await expect(
+                MiniCoin.mint(owner.address, amount)
+            ).to.be.revertedWith('MiniCoin: Already minted');
+        });
+        
+        it('Should revert if owner tries to mint more than once with explicit connect to owner', async () => {
+            const amount = 1;
+            await expect(
+                MiniCoin.connect(owner).mint(owner.address, amount)
+            ).to.be.revertedWith('MiniCoin: Already minted');
+        });
+
+        it('Check owner', async () => {
+            expect(await MiniCoin.owner()).to.equal(owner.address);
+        });
     });
 
     describe('MiniCoin - Allowance', async function () {
