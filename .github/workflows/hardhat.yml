@@ -7,13 +7,33 @@ on:
 jobs:
   test_hardhat:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
+
       - name: NPM Clean Install
         run: npm ci
+
       - name: Hardhat Compile
+        env:
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          CC3_RPC_URL: ${{ secrets.CC3_RPC_URL }}
+          CC3_TESTNET_RPC_URL: ${{ secrets.CC3_TESTNET_RPC_URL }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: npx hardhat compile
+
       - name: Hardhat Test
+        env:
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          CC3_RPC_URL: ${{ secrets.CC3_RPC_URL }}
+          CC3_TESTNET_RPC_URL: ${{ secrets.CC3_TESTNET_RPC_URL }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: npx hardhat test
+
       - name: Hardhat Coverage Result
+        env:
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          CC3_RPC_URL: ${{ secrets.CC3_RPC_URL }}
+          CC3_TESTNET_RPC_URL: ${{ secrets.CC3_TESTNET_RPC_URL }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: npx hardhat coverage
