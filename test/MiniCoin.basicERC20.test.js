@@ -51,7 +51,7 @@ describe('MiniCoin - Basic ERC20 functions', function () {
         });
 
         it('Should revert if owner tries to mint more than once with explicit connect to owner', async () => {
-            const amount = 10n ** 18n; 
+            const amount = 10n ** 18n;
             await expect(MiniCoin.connect(owner).mint(owner.address, amount)).to.be.revertedWith(
                 'MiniCoin: Already minted'
             );
