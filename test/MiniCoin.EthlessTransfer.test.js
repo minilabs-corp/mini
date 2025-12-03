@@ -181,11 +181,16 @@ describe('MiniCoin - Ethless Transfer functions', function () {
                 splitSignature.s
             );
 
-            await TestHelper.submitTxnAndCheckResult(input, MiniCoin.address, user3, ethers, provider, ErrorMessages.ETHLESS_INVALID_SIGNATURE);
-
-            expect(await MiniCoin.balanceOf(owner.address)).to.equal(
-                ethers.BigNumber.from(originalBalance)
+            await TestHelper.submitTxnAndCheckResult(
+                input,
+                MiniCoin.address,
+                user3,
+                ethers,
+                provider,
+                ErrorMessages.ETHLESS_INVALID_SIGNATURE
             );
+
+            expect(await MiniCoin.balanceOf(owner.address)).to.equal(ethers.BigNumber.from(originalBalance));
             expect(await MiniCoin.balanceOf(user2.address)).to.equal(0);
         });
 

@@ -36,12 +36,20 @@ contract MiniCoin is Ethless, ERC20Burnable, Ownable {
         return Ethless.balanceOf(account);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual override(ERC20) {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal virtual override(ERC20) {
         require(from == address(0) || balanceOf(from) >= amount, 'MiniCoin: Insufficient balance');
         ERC20._beforeTokenTransfer(from, to, amount);
     }
 
-    function _afterTokenTransfer(address from, address to, uint256 amount) internal virtual override(ERC20) {
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal virtual override(ERC20) {
         ERC20._afterTokenTransfer(from, to, amount);
     }
 }

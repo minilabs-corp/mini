@@ -70,7 +70,7 @@ const setupContractTesting = async (owner) => {
     } else {
         const MiniCoinAddress = await addressBook.retrieveContract('MiniCoin', network.name);
 
-        MiniCoin = await new ethers.Contract(MiniCoinAddress, FactoryMiniCoin.interface, owner.address);        
+        MiniCoin = await new ethers.Contract(MiniCoinAddress, FactoryMiniCoin.interface, owner.address);
     }
     return [MiniCoin];
 };
