@@ -1,9 +1,9 @@
-require('dotenv').config({path:__dirname+'/.env.development'});
+require('dotenv').config({ path: __dirname + '/.env.development' });
 require("@nomiclabs/hardhat-waffle");
-require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-ethers")
 require('@openzeppelin/hardhat-upgrades');
+require('@nomicfoundation/hardhat-verify');
 require("hardhat-gas-reporter");
-require("hardhat-awesome-cli");
 require("solidity-coverage");
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -22,8 +22,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
- module.exports = {
-  networks:{
+module.exports = {
+  networks: {
     hardhat: {
       allowUnlimitedContractSize: true,
       gas: 72_000_000,
@@ -31,50 +31,51 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
       gasPrice: 2000,
       initialBaseFeePerGas: 1
     },
-    rinkeby:{
-      url: `${process.env.RPC_RINKEBY}`,
-      chainId: 4,
-      gas: "auto",
-      gasPrice: 8000000000,
-      accounts: {
-        mnemonic: `${process.env.RINKEBY_MNEMONIC}`,
-        path: "m/44'/60'/0'/0",
-        initialIndex: 0,
-        count: 10,
-        passphrase: ""
-      }
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY]
     },
-    mumbai: {
-      url: `${process.env.RPC_POLYGONMUMBAI}`,
-      chainId: 80001,
-      accounts: {
-        mnemonic: `${process.env.POLYGONMUMBAI_MNEMONIC}`,
-        path: "m/44'/60'/0'/0",
-        initialIndex: 0,
-        count: 10,
-        passphrase: ""
-      }
+    cc3: {
+      url: process.env.CC3_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY]
     },
-    kaleido: {
-      url:  `https://${process.env.RPC_KALEIDO_USER}:${process.env.RPC_KALEIDO_PASS}@${process.env.RPC_KALEIDO_ENDPOINT}`,
-      chainId: 1952923003,
-      accounts: {
-        mnemonic: `${process.env.KALEIDO_MNEMONIC}`,
-        path: "m/44'/60'/0'/0",
-        initialIndex: 0,
-        count: 10,
-        passphrase: ""
-      }
-    },
+    cc3_testnet: {
+      url: process.env.CC3_TESTNET_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY]
+    }
   },
   solidity: {
     version: "0.8.13",
     settings: {
       optimizer: {
-        runs:200,
+        runs: 200,
         enabled: true
       }
     }
+  },
+  etherscan: {
+    apiKey: {
+      cc3: `${process.env.BLOCKSCOUT_API_KEY}`,
+      cc3_testnet: `${process.env.BLOCKSCOUT_API_KEY_TESTNET}`
+    },
+    customChains: [
+      {
+        network: "cc3",
+        chainId: 102030,
+        urls: {
+          apiURL: "https://creditcoin.blockscout.com/api",
+          browserURL: "https://creditcoin.blockscout.com"
+        }
+      },
+      {
+        network: "cc3_testnet",
+        chainId: 102031,
+        urls: {
+          apiURL: "https://creditcoin-testnet.blockscout.com/api",
+          browserURL: "https://creditcoin-testnet.blockscout.com"
+        }
+      }
+    ]
   },
   mocha: {
     timeout: 2000000

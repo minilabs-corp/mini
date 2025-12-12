@@ -13,10 +13,8 @@ async function main() {
     // Contract deployed with transparent proxy
     const MiniCoinContract = await ethers.getContractFactory('MiniCoin');
     const MiniCoin = await MiniCoinContract.deploy(
-        owner,
         TestHelper.NAME,
-        TestHelper.SYMBOL,
-        TestHelper.TOTALSUPPLY
+        TestHelper.SYMBOL
     );
     await MiniCoin.deployed();
     addressBook.saveContract(
